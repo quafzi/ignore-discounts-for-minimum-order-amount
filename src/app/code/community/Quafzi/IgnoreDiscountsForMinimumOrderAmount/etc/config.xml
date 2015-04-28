@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Quafzi_IgnoreDiscountsForMinimumOrderAmount>
+            <version>1.0.0</version>
+        </Quafzi_IgnoreDiscountsForMinimumOrderAmount>
+    </modules>
+    <global>
+        <models>
+            <quafzi_ignorediscountsforminimumorderamount>
+                <class>Quafzi_IgnoreDiscountsForMinimumOrderAmount_Model</class>
+            </quafzi_ignorediscountsforminimumorderamount>
+            <sales>
+                <rewrite>
+                    <quote_address>Quafzi_IgnoreDiscountsForMinimumOrderAmount_Model_Sales_Quote_Address</quote_address>
+                </rewrite>
+            </sales>
+        </models>
+        <helpers>
+            <quafzi_ignorediscountsforminimumorderamount>
+                <class>Quafzi_IgnoreDiscountsForMinimumOrderAmount_Helper</class>
+            </quafzi_ignorediscountsforminimumorderamount>
+        </helpers>
+    </global>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Quafzi_IgnoreDiscountsForMinimumOrderAmount>
+                    <files>
+                        <default>Quafzi_IgnoreDiscountsForMinimumOrderAmount.csv</default>
+                    </files>
+                </Quafzi_IgnoreDiscountsForMinimumOrderAmount>
+            </modules>
+        </translate>
+      
+    </adminhtml>
+    <default>
+        <sales>
+            <minimum_order>
+                <validate_after_discount>1</validate_after_discount>
+            </minimum_order>
+        </sales>
+    </default>
+</config>

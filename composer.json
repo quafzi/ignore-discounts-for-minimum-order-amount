@@ -1,0 +1,15 @@
+{
+    "name": "quafzi/ignore-discounts-for-minimum-order-amount",
+    "license": "MIT",
+    "type": "magento-module",
+    "description": "Ignore discounts during minimum order amount validation",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "authors":[
+        {
+            "name":"Thomas Birke",
+            "email":"tbirke@netextreme.de"
+        }
+    ]
+}
