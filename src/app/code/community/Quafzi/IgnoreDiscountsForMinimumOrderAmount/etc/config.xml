@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Quafzi_IgnoreDiscountsForMinimumOrderAmount>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </Quafzi_IgnoreDiscountsForMinimumOrderAmount>
     </modules>
     <global>
