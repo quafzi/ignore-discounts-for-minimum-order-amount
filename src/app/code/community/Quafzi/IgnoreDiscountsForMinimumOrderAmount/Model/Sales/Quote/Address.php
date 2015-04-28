@@ -18,14 +18,20 @@ class Quafzi_IgnoreDiscountsForMinimumOrderAmount_Model_Sales_Quote_Address
      */
     public function validateMinimumAmount()
     {
-        $result = parent::validateMinimumAmount();
+        $storeId = $this->getQuote()->getStoreId();
 
-        if (0 == Mage::getStoreConfig('sales/minimum_order/validate_after_discount', $this->getStoreId())) {
-            if ($this->getGrandTotal()<$amount) {
-                $result = false;
-            }
+        $valid = parent::validateMinimumAmount();
+
+        if (1 == Mage::getStoreConfig('sales/minimum_order/validate_after_discount', $storeId)
+            || !Mage::getStoreConfigFlag('sales/minimum_order/active', $storeId)
+            || $this->getQuote()->getIsVirtual() && $this->getAddressType() == self::TYPE_SHIPPING
+            || !$this->getQuote()->getIsVirtual() && $this->getAddressType() != self::TYPE_SHIPPING
+        ) {
+            return $valid;
         }
 
-        return $result;
+        $min = Mage::getStoreConfig('sales/minimum_order/amount', $storeId);
+
+        return ($min <= $this->getBaseSubtotalInclTax());
     }
 }
