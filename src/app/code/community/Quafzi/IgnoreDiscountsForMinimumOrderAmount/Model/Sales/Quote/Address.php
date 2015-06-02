@@ -19,19 +19,26 @@ class Quafzi_IgnoreDiscountsForMinimumOrderAmount_Model_Sales_Quote_Address
     public function validateMinimumAmount()
     {
         $storeId = $this->getQuote()->getStoreId();
-
-        $valid = parent::validateMinimumAmount();
-
-        if (1 == Mage::getStoreConfig('sales/minimum_order/validate_after_discount', $storeId)
-            || !Mage::getStoreConfigFlag('sales/minimum_order/active', $storeId)
-            || $this->getQuote()->getIsVirtual() && $this->getAddressType() == self::TYPE_SHIPPING
-            || !$this->getQuote()->getIsVirtual() && $this->getAddressType() != self::TYPE_SHIPPING
-        ) {
-            return $valid;
+        if (!Mage::getStoreConfigFlag('sales/minimum_order/active', $storeId)) {
+            return true;
         }
 
-        $min = Mage::getStoreConfig('sales/minimum_order/amount', $storeId);
+        if ($this->getQuote()->getIsVirtual() && $this->getAddressType() == self::TYPE_SHIPPING) {
+            return true;
+        } elseif (!$this->getQuote()->getIsVirtual() && $this->getAddressType() != self::TYPE_SHIPPING) {
+            return true;
+        }
 
-        return ($min <= $this->getBaseSubtotalInclTax());
+        $amount = Mage::getStoreConfig('sales/minimum_order/amount', $storeId);
+        if (1 == Mage::getStoreConfig('sales/minimum_order/validate_after_discount', $storeId)) {
+            if ($this->getSubtotalWithDiscount() < $amount) {
+                return false;
+            }
+        } else {
+            if ($this->getSubtotalInclTax() < $amount) {
+                return false;
+            }
+        }
+        return true;
     }
 }
